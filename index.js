@@ -6,7 +6,7 @@ app.use(express.json());
 
 // ⚠️ 改成你自己的 Aura 資訊
 const driver = neo4j.driver(
-  "https://2f4ad74f.databases.neo4j.io/db/{databaseName}/query/v2",
+  "neo4j+s://2f4ad74f.databases.neo4j.io",
   neo4j.auth.basic("neo4j", "985632147")
 );
 
