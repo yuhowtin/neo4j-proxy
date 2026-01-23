@@ -7,7 +7,7 @@ app.use(express.json());
 // ⚠️ 改成你自己的 Aura 資訊
 const driver = neo4j.driver(
   "neo4j+s://2f4ad74f.databases.neo4j.io",
-  neo4j.auth.basic("neo4j", "985632147")
+  neo4j.auth.basic("neo4j", "project")
 );
 
 app.post("/query", async (req, res) => {
