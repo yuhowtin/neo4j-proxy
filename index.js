@@ -5,9 +5,16 @@ const app = express();
 app.use(express.json());
 
 // ⚠️ 改成你自己的 Aura 資訊
+// const driver = neo4j.driver(
+//   "neo4j+s://2f4ad74f.databases.neo4j.io",
+//   neo4j.auth.basic("neo4j", "985632147")
+// );
 const driver = neo4j.driver(
-  "neo4j+s://2f4ad74f.databases.neo4j.io",
-  neo4j.auth.basic("neo4j", "985632147")
+  process.env.NEO4J_URI,
+  neo4j.auth.basic(
+    process.env.NEO4J_USER,
+    process.env.NEO4J_PASSWORD
+  )
 );
 
 app.post("/query", async (req, res) => {
