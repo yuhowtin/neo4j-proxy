@@ -17,23 +17,45 @@ const driver = neo4j.driver(
   )
 );
 
+// app.post("/query", async (req, res) => {
+//   const { cypher, params } = req.body;
+
+//   if (!cypher) {
+//     return res.status(400).json({ error: "cypher is required" });
+//   }
+
+//   const session = driver.session();
+//   try {
+//     const result = await session.run(cypher, params || {});
+//     res.json(result.records.map(r => r.toObject()));
+//   } catch (e) {
+//     res.status(500).json({ error: e.message });
+//   } finally {
+//     await session.close();
+//   }
+// });
+
 app.post("/query", async (req, res) => {
   const { cypher, params } = req.body;
-
   if (!cypher) {
     return res.status(400).json({ error: "cypher is required" });
   }
-
   const session = driver.session();
   try {
     const result = await session.run(cypher, params || {});
-    res.json(result.records.map(r => r.toObject()));
+    const data = result.records.map(r => r.toObject());
+    res.json({ 
+      data: data,
+      count: data.length,
+      hasResults: data.length > 0
+    });
   } catch (e) {
     res.status(500).json({ error: e.message });
   } finally {
     await session.close();
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
